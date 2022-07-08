@@ -1,3 +1,4 @@
+//  V4.01   29-06-2022 QEX Team MOD full rebuilding design and functionaly ( BRAZIL PY Bands) Thanks QEX Team 73!
 //  V4.0    23-02-2022 Binns MOD full rebuilding design and functionaly. See owerview on youtube channel:
 //  V3.4    24-11-2021 Bug support.
 //  V3.4    24-11-2021 Memory added for BFO in each band when crystal is in use.
@@ -78,8 +79,8 @@
 #define ESP32_I2C_SDA    21  // I2C bus pin on ESP32
 #define ESP32_I2C_SCL    22  // I2C bus pin on ESP32
 #define RESET_PIN        12
-#define ENCODER_PIN_A    17  // http://www.buxtronix.net/2011/10/rotary-encoders-done-properly.html
-#define ENCODER_PIN_B    16
+#define ENCODER_PIN_A    16  // http://www.buxtronix.net/2011/10/rotary-encoders-done-properly.html
+#define ENCODER_PIN_B    17
 #define ENCODER_SWITCH   33
 #define BAT_INFO         25
 #define BEEPER           32
@@ -201,10 +202,10 @@ typedef struct // Retro bands data
 } RetroBand ;
 
 RetroBand bandRetro[] {
-  "FM",   "FM",   "",             "",                 10, 40,   240,200,    0,  87.50, 108.00,  87.50,   50,    1, 10,   10,
+  "FM",   "FM",   "",             "",                 10, 40,   240,200,    0,  64.00, 108.00,  93.70,   50,    1, 10,   10,
   "VHF",  "УКВ",  "",             "",                 10, 80,   240,150,    0,  64.00,  87.00,  64.00,   50,    1, 10,    1,
-  "LW",   "ДВ",   "",             "",                150, 40,   240, 40,    1,    153,    279,    153,   10,    9,  1,    1,
-  "MW",   "СВ",   "",             "",                150, 80,   240, 90,    2,    522,   1701,    522,    1,   90,  9,    1,
+  "LW",   "ДВ",   "",             "",                150, 40,   240, 40,    1,    150,    375,    183,   10,   10,  1,    1,
+  "MW",   "СВ",   "",             "",                150, 80,   240, 90,    2,    520,   1710,    740,    1,  100,  5,    1,
   "SW1",  "КВ1",  "NIGHT WINTER", "ЗИМНЯЯ НОЧЬ",      10,120,     0, 40,   29,   1800,   5060,   2300,    1,  100,  5,    1,
   "SW2",  "КВ2",  "NIGHT",        "НОЧЬ",             10,160,     0, 80,   29,   5300,   7600,   5900,    1,  100,  5,    1,
   "SW3",  "КВ3",  "MOSTLY NIGHT", "В ОСНОВНОМ НОЧЬ",  10,200,     0,120,   29,   9400,  12160,   9400,    1,  100,  5,    1,
@@ -579,42 +580,42 @@ typedef struct // Band data
 
 //   Band table
 Band band[] = {
-  {   "FM", FM_BAND_TYPE,  FM,  6400, 10800,  8930, 10, 0, 0}, //  FM          0
-  {   "LW", LW_BAND_TYPE,  AM,   153,   279,   198,  9, 0, 0}, //  LW          1
-  {   "MW", MW_BAND_TYPE,  AM,   522,  1701,  1395,  9, 0, 0}, //  MW          2
-  {"BACON", LW_BAND_TYPE,  AM,   280,   470,   284,  1, 0, 0}, // Ham  800M    3
+  {   "FM", FM_BAND_TYPE,  FM,  6400, 10800,  9370, 10, 0, 0}, //  FM          0
+  {   "LW", LW_BAND_TYPE,  AM,   150,   375,   183,  9, 0, 0}, //  LW          1
+  {   "MW", SW_BAND_TYPE,  AM,   520,  1710,  1110, 10, 0, 0}, //  MW          2
+  {  "NDB", SW_BAND_TYPE,  AM,   190,   535,   235,  1, 0, 0}, // Ham  800M    3
   { "630M", SW_BAND_TYPE, LSB,   472,   479,   475,  1, 0, 0}, // Ham  630M    4
-  { "160M", SW_BAND_TYPE, LSB,  1800,  1910,  1899,  1, 0, 0}, // Ham  160M    5
+  { "160M", SW_BAND_TYPE, LSB,  1800,  2000,  1825,  1, 0, 0}, // Ham  160M    5
   { "120M", SW_BAND_TYPE,  AM,  2300,  2495,  2400,  5, 0, 0}, //      120M    6
   {  "90M", SW_BAND_TYPE,  AM,  3200,  3400,  3300,  5, 0, 0}, //       90M    7
-  {  "80M", SW_BAND_TYPE, LSB,  3500,  3800,  3630,  1, 0, 0}, // Ham   80M    8
+  {  "80M", SW_BAND_TYPE, LSB,  3500,  4000,  3780,  1, 0, 0}, // Ham   80M    8
   {  "75M", SW_BAND_TYPE,  AM,  3900,  4000,  3950,  5, 0, 0}, //       75M    9
-  {  "60M", SW_BAND_TYPE, USB,  5330,  5410,  5375,  1, 0, 0}, // Ham   60M   10
-  {  "49M", SW_BAND_TYPE,  AM,  5900,  6200,  6000,  5, 0, 0}, //       49M   11
-  {  "40M", SW_BAND_TYPE, LSB,  7000,  7200,  7185,  1, 0, 0}, // Ham   40M   12
+  {  "60M", SW_BAND_TYPE, USB,  5351,  5367,  5355,  1, 0, 0}, // Ham   60M   10
+  {  "49M", SW_BAND_TYPE,  AM,  5500,  6500,  6000,  5, 0, 0}, //       49M   11
+  {  "40M", SW_BAND_TYPE, LSB,  7000,  7300,  7120,  1, 0, 0}, // Ham   40M   12
   {  "41M", SW_BAND_TYPE,  AM,  7200,  7450,  7210,  5, 0, 0}, //       41M   13
-  {  "31M", SW_BAND_TYPE,  AM,  9400,  9900,  9600,  5, 0, 0}, //       31M   14
+  {  "31M", SW_BAND_TYPE,  AM,  9000, 10000,  9550,  5, 0, 0}, //       31M   14
   {  "30M", SW_BAND_TYPE, USB, 10100, 10150, 10125,  1, 0, 0}, // Ham   30M   15
-  {  "25M", SW_BAND_TYPE,  AM, 11600, 12100, 11700,  5, 0, 0}, //       25M   16
-  {  "22M", SW_BAND_TYPE,  AM, 13570, 13870, 13700,  5, 0, 0}, //       22M   17
-  {  "20M", SW_BAND_TYPE, USB, 14000, 14350, 14250,  1, 0, 0}, // Ham   20M   18
-  {  "19M", SW_BAND_TYPE,  AM, 15100, 15830, 15700,  5, 0, 0}, //       19M   19
-  {  "17M", SW_BAND_TYPE,  AM, 17480, 17900, 17600,  5, 0, 0}, //       17M   20
-  {  "16M", SW_BAND_TYPE, USB, 18068, 18168, 18100,  1, 0, 0}, // Ham   16M   21
-  {  "15M", SW_BAND_TYPE,  AM, 18900, 19020, 18950,  5, 0, 0}, //       15M   22
-  {  "14M", SW_BAND_TYPE, USB, 21000, 21450, 21350,  1, 0, 0}, // Ham   14M   23
-  {  "13M", SW_BAND_TYPE,  AM, 21450, 21850, 21500,  5, 0, 0}, //       13M   24
+  {  "25M", SW_BAND_TYPE,  AM, 11450, 12450, 11700,  5, 0, 0}, //       25M   16
+  {  "22M", SW_BAND_TYPE,  AM, 13450, 14000, 13700,  5, 0, 0}, //       22M   17
+  {  "20M", SW_BAND_TYPE, USB, 14000, 14350, 14200,  1, 0, 0}, // Ham   20M   18
+  {  "19M", SW_BAND_TYPE,  AM, 14950, 15950, 15700,  5, 0, 0}, //       19M   19
+  {  "16M", SW_BAND_TYPE,  AM, 17050, 18050, 17600,  5, 0, 0}, //       16M   20
+  {  "17M", SW_BAND_TYPE, USB, 18068, 18168, 18100,  1, 0, 0}, // Ham   17M   21
+  {  "14M", SW_BAND_TYPE,  AM, 18900, 19020, 18950,  5, 0, 0}, //       14M   22
+  {  "15M", SW_BAND_TYPE, USB, 21000, 21450, 21250,  1, 0, 0}, // Ham   15M   23
+  {  "13M", SW_BAND_TYPE,  AM, 20950, 21950, 21500,  5, 0, 0}, //       13M   24
   {  "12M", SW_BAND_TYPE, USB, 24890, 24990, 24940,  1, 0, 0}, // Ham   12M   25
   {  "11M", SW_BAND_TYPE,  AM, 25670, 26100, 25800,  5, 0, 0}, //       11M   26
-  {   "CB", SW_BAND_TYPE,  AM, 26200, 27990, 27200,  1, 0, 0}, // CB band     27
-  {  "10M", SW_BAND_TYPE, USB, 28000, 30000, 28500,  1, 0, 0}, // Ham   10M   28
-  {   "SW", SW_BAND_TYPE,  AM,  1730, 30000, 15500,  5, 0, 0}  // Whole SW    29
+  {   "CB", SW_BAND_TYPE,  AM, 26200, 27990, 27025,  1, 0, 0}, // CB band     27
+  {  "10M", SW_BAND_TYPE, USB, 28000, 29700, 28400,  1, 0, 0}, // Ham   10M   28
+  {   "SW", SW_BAND_TYPE,  AM,  1700, 30000, 15500,  5, 0, 0}  // Whole SW    29
 };
 
 #define BAND_FM     0
 #define BAND_LW     1
 #define BAND_MW     2
-#define BAND_BACON  3
+#define BAND_NDB    3
 #define BAND_630M   4
 #define BAND_160M   5
 #define BAND_120M   6
@@ -631,10 +632,10 @@ Band band[] = {
 #define BAND_22M    17
 #define BAND_20M    18
 #define BAND_19M    19
-#define BAND_17M    20
-#define BAND_16M    21
-#define BAND_15M    22
-#define BAND_14M    23
+#define BAND_16M    20
+#define BAND_17M    21
+#define BAND_14M    22
+#define BAND_15M    23
 #define BAND_13M    24
 #define BAND_12M    25
 #define BAND_11M    26
@@ -961,11 +962,11 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   delay(500);
   tft.setCursor(7, 50);
-  tft.setTextSize(2);
+  tft.setTextSize(1);// texto alterado tamanho (2)
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
 
   Serial.println("     SI4735/32 Radio");
-  Serial.println("Version 4.0 23-02-2022");
+  Serial.println("Version 4.01 24/06/2022");
 
   spr.createSprite(265, 120);
   spr.fillScreen(COLOR_BACKGROUND);
@@ -973,21 +974,21 @@ void setup() {
   spr.pushSprite(27, 120);
   spr.deleteSprite();
   
-  tft.println("SI4735/32  Radio");
+  tft.println("SI4735 DSP Radio");
   tft.setCursor(7, 70);
-  tft.println(" Version 4.0");
+  tft.println(" Version 4.01");
   tft.setCursor(7, 95);
-  tft.println(" 23-02-2022");
+  tft.println(" 29/06/2022");
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(7, 120);
-  tft.println(" Binns MOD nul@bk.ru");
+  tft.println("QEX Team MOD");
   tft.setTextColor(TFT_CYAN, TFT_BLACK);
   tft.setTextSize(1);
   tft.setCursor(0, 220);
   tft.println("PRESS & HOLD ENCODER FOR LOAD DEFAULT SETINGS");
   tft.setCursor(0, 230);
   tft.println("TAP & HOLD ON DISPLAY FOR ROTATE SCREEN");
-  tft.setTextSize(2);
+  tft.setTextSize(1);// texto alterado tamanho (2)
   tft.setCursor(7, 170);
   delay(1000);
   tft.setTextColor(TFT_GREEN, TFT_BLACK);
@@ -4175,7 +4176,7 @@ void subrstatus() {
   tft.setTextSize(1);
   tft.setCursor(0, 0);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Software version V3.4  24-11-2021 Binns MOD", 5, 0);
+  tft.drawString("Software V4.01 29/06/2022 QEX Team MOD", 5, 0);
   tft.drawString("Mode     : " + String(bandModeDesc[band[bandIdx].prefmod]), 5, 10);
   if ( currentMode != FM)  tft.drawString("Freq.    : " + String(currentFrequency, 0) + " KHz", 5, 20);
   else tft.drawString("Freq.    : " + String(currentFrequency / 100, 1) + " MHz", 5, 20);

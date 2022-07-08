@@ -1,7 +1,7 @@
 //======================================================= Memory     =======================================
 MemoryBankFile MemoBankFile[] PROGMEM {
   7175, BAND_40M,   LSB,  "HAM RADIO FRQUENCY",//1
-  10660,BAND_FM,    FM,   "LOVE радио",     //2
+  10660,BAND_FM,    FM,   "LOVE",//2
   1008, BAND_MW,    AM,   "LO",//3
   1215, BAND_MW,    AM,   "WT",//4
   657,  BAND_MW,    AM,   "DO",//5
