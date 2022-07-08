@@ -13,7 +13,11 @@ This firmware is an Russian alternative by Bernard Binns with some improvements
 References:
 
 https://youtu.be/bVdtMlt1SCI
+
 https://youtu.be/dspbZz3rvrM
+
 https://youtu.be/zZJLbIJCTSY
+
 https://disk.yandex.ru/d/UguNn-mRPN6d9A
+
 http://hamforum.ru/viewtopic.php?f=45&t=777
