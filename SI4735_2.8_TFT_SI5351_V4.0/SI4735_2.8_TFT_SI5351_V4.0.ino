@@ -1,4 +1,4 @@
-//  V4.01   29-06-2022 QEX Team MOD full rebuilding design and functionaly ( BRAZIL PY Bands) Thanks QEX Team 73!
+//  V4.02   29-06-2022 QEX Team MOD full rebuilding design and functionaly ( BRAZIL PY Bands) Thanks QEX Team 73!
 //  V4.0    23-02-2022 Binns MOD full rebuilding design and functionaly. See owerview on youtube channel:
 //  V3.4    24-11-2021 Bug support.
 //  V3.4    24-11-2021 Memory added for BFO in each band when crystal is in use.
@@ -582,8 +582,8 @@ typedef struct // Band data
 Band band[] = {
   {   "FM", FM_BAND_TYPE,  FM,  6400, 10800,  9370, 10, 0, 0}, //  FM          0
   {   "LW", LW_BAND_TYPE,  AM,   150,   375,   183,  9, 0, 0}, //  LW          1
-  {   "MW", SW_BAND_TYPE,  AM,   520,  1710,  1110, 10, 0, 0}, //  MW          2
-  {  "NDB", SW_BAND_TYPE,  AM,   190,   535,   235,  1, 0, 0}, // Ham  800M    3
+  {   "MW", MW_BAND_TYPE,  AM,   520,  1710,  1110, 10, 0, 0}, //  MW          2
+  {  "NDB", LW_BAND_TYPE,  AM,   190,   535,   235,  1, 0, 0}, // Ham  800M    3
   { "630M", SW_BAND_TYPE, LSB,   472,   479,   475,  1, 0, 0}, // Ham  630M    4
   { "160M", SW_BAND_TYPE, LSB,  1800,  2000,  1825,  1, 0, 0}, // Ham  160M    5
   { "120M", SW_BAND_TYPE,  AM,  2300,  2495,  2400,  5, 0, 0}, //      120M    6
@@ -966,7 +966,7 @@ void setup() {
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
 
   Serial.println("     SI4735/32 Radio");
-  Serial.println("Version 4.01 24/06/2022");
+  Serial.println("Version 4.02 24/06/2022");
 
   spr.createSprite(265, 120);
   spr.fillScreen(COLOR_BACKGROUND);
@@ -976,7 +976,7 @@ void setup() {
   
   tft.println("SI4735 DSP Radio");
   tft.setCursor(7, 70);
-  tft.println(" Version 4.01");
+  tft.println(" Version 4.02");
   tft.setCursor(7, 95);
   tft.println(" 29/06/2022");
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -4131,13 +4131,13 @@ void drawList(uint8_t lay, String text) {
   }
   tft.fillRect(d, 0, 240, 20, TFT_GREY);
   tft.setTextSize(2);
-  tft.setTextColor(TFT_VIOLET, TFT_GREY);
+  tft.setTextColor(TFT_BLACK, TFT_GREY);
   tft.setTextDatum(BC_DATUM);
   tft.drawString(text, 120 + d, 20);
   if (lay == L_SETUP) {
     spr.createSprite(265, 120);
     spr.fillScreen(COLOR_BACKGROUND);
-    spr.pushImage(0, 0, 265, 120, (uint16_t *)logo);
+    //spr.pushImage(0, 0, 265, 120, (uint16_t *)logo); //===== Retirado logo na tela de SETUP
     if (screenV) spr.pushSprite(-25, 80); else spr.pushSprite(27, 80);
     spr.deleteSprite();
   }
@@ -4176,7 +4176,7 @@ void subrstatus() {
   tft.setTextSize(1);
   tft.setCursor(0, 0);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);
-  tft.drawString("Software V4.01 29/06/2022 QEX Team MOD", 5, 0);
+  tft.drawString("Software V4.02 29/06/2022 QEX Team MOD", 5, 0);
   tft.drawString("Mode     : " + String(bandModeDesc[band[bandIdx].prefmod]), 5, 10);
   if ( currentMode != FM)  tft.drawString("Freq.    : " + String(currentFrequency, 0) + " KHz", 5, 20);
   else tft.drawString("Freq.    : " + String(currentFrequency / 100, 1) + " MHz", 5, 20);
@@ -5408,16 +5408,17 @@ void displSETUP() {
       tft.fillRect((n * 2) + 278, 40, 2, 160, ((int(n / 2) * 4096) + (n * 32)));
     }
   }
+  
   tft.fillRect(d, 20, 240, 100, TFT_BLACK);
   spr.createSprite(265, 120);
   spr.fillScreen(COLOR_BACKGROUND);
-  spr.pushImage(0, 0, 265, 120, (uint16_t *)logo);
+  //spr.pushImage(0, 0, 265, 120, (uint16_t *)logo); //===== Retirado logo na tela de SETUP
   if (screenV) spr.pushSprite(-25, 80); else spr.pushSprite(27, 80);
   spr.deleteSprite();
 
   tft.setTextSize(2);
   tft.setTextDatum(BR_DATUM);
-  tft.setTextColor(TFT_LIGTHYELLOW, TFT_BLACK);
+  tft.setTextColor(TFT_GREEN, TFT_BLACK);
 
   switch (pageSetup) {
     case 0:
