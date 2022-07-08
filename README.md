@@ -1,4 +1,4 @@
-# Firmware for SI473x based rreceiver
+# Firmware for SI473x based receiver
 
 Original lib project from PU2CLR
 
