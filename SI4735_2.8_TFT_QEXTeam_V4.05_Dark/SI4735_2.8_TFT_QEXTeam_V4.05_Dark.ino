@@ -1429,6 +1429,7 @@ void BandSet()  {
     if (ssbLoaded == false) {
       loadSSB();
     }
+    // FIX: lock MCU when set SSB and change input
     useBand();
     setBandWidth();
     checkAGC();
