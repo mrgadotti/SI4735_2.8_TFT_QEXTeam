@@ -85,8 +85,8 @@
 #define ENCODER_PIN_A    16  // http://www.buxtronix.net/2011/10/rotary-encoders-done-properly.html
 #define ENCODER_PIN_B    17
 #define ENCODER_SWITCH   33
-#define BAT_INFO         25
-#define BEEPER           32
+#define BAT_INFO         35
+#define BEEPER           13
 #define DISPLAY_LED      14
 #define AUDIO_MUTE       27
 // =================================================
@@ -1056,6 +1056,8 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(ENCODER_PIN_B), RotaryEncFreq, CHANGE);
   si4735.setAudioMuteMcuPin(AUDIO_MUTE);
 
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_34,0);
+
   for (int i = 0; i <= lastBand; i++) bandMode[i] = band[i].prefmod;
 
 
@@ -1235,6 +1237,7 @@ void setup() {
   si4735.setSeekAmSrnThreshold(20);
   si4735.setSeekFmRssiThreshold(5);
   si4735.setSeekFmSrnThreshold(5);
+
   xTaskCreate(SaveInEeprom, "SaveInEeprom", 2048, NULL, 1, NULL);
   delay(10);
 }// end setup
@@ -1414,6 +1417,13 @@ void BandSet()  {
 
 //=======================================================================================
 void useBand()  {
+  if ((band[bandIdx].bandType == MW_BAND_TYPE) || (band[bandIdx].bandType == LW_BAND_TYPE) || (band[bandIdx].bandType == SW_BAND_TYPE)) {
+    si4735.setGpioCtl(1, 0, 0);
+    si4735.setGpio(true, 0, 0);
+  } else {
+    si4735.setGpioCtl(1, 0, 0);
+    si4735.setGpio(false, 0, 0);
+  }
   //=======================================================================================
   if ((band[bandIdx].bandType == MW_BAND_TYPE) || (band[bandIdx].bandType == LW_BAND_TYPE)) {
     band[bandIdx].currentStep = ssIdxMW;
@@ -3093,14 +3103,15 @@ void loop() {
           }
 
           if (n == B_RETRO) {
-            RETRObut = true;
-            presetLoad();
-            presetSort();
-            presetSetPos();
-            initRetro();
-            currentRetroFreq = 0;
-            ThirdLayer = false;
-            SecondLayer  = true;
+              esp_light_sleep_start();
+//            RETRObut = true;
+//            presetLoad();
+//            presetSort();
+//            presetSetPos();
+//            initRetro();
+//            currentRetroFreq = 0;
+//            ThirdLayer = false;
+//            SecondLayer  = true;
           }
           
           if (n == B_MEMO) {
@@ -3244,7 +3255,7 @@ void loop() {
           }
 
           if (n == B_LIGHT) {
-            if (displayPower) {
+             if (displayPower) {
               ErrorBeep();
             } else {
               if (bright == false)  {

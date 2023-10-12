@@ -46,7 +46,7 @@ But but[] PROGMEM = {
   {7,   L_THIRD, 		  B_BLUE,  "SETUP",	160,  160,  240,  160},
   {8,   L_THIRD, 		  B_BLUE,  "SQLCH",	160,  200,  160,  160},
   {9,   L_THIRD, 		  B_BLUE,  "SCAN", 	 80,  160,   80,  160},
-  {10,  L_THIRD, 		  B_BLUE,  "RETRO",	 80,  240,  240,   80},
+  {10,  L_THIRD, 		  B_BLUE,  "ESP32",	 80,  240,  240,   80},
   {11,  L_THIRD, 		  B_GREEN, "BACK", 	160,  280,  240,  200},
 
   {3,   L_HAM, 		    B_BLUE,  "NDB", 	  0,   80,   40,   80},
