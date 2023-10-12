@@ -1069,7 +1069,6 @@ void setup() {
   {
     si4735.setDeviceI2CAddress(1);
   }
-
   // Setup the radio from last setup in EEPROM
   bandIdx                   =  storage.bandIdx;
   band[bandIdx].currentFreq =  storage.Freq;
@@ -1237,7 +1236,6 @@ void setup() {
   si4735.setSeekAmSrnThreshold(20);
   si4735.setSeekFmRssiThreshold(5);
   si4735.setSeekFmSrnThreshold(5);
-
   xTaskCreate(SaveInEeprom, "SaveInEeprom", 2048, NULL, 1, NULL);
   delay(10);
 }// end setup
@@ -1397,6 +1395,16 @@ void printConfig() {
   }
 }
 
+void setBandSwitch() {
+   if ((band[bandIdx].bandType == MW_BAND_TYPE) || (band[bandIdx].bandType == LW_BAND_TYPE) || (band[bandIdx].bandType == SW_BAND_TYPE)) {
+    si4735.setGpioCtl(1, 0, 0);
+    si4735.setGpio(true, 0, 0);
+  } else {
+    si4735.setGpioCtl(1, 0, 0);
+    si4735.setGpio(false, 0, 0);
+  }
+}
+
 //=======================================================================================
 void BandSet()  {
   //=======================================================================================
@@ -1404,26 +1412,33 @@ void BandSet()  {
   if ((currentMode == AM) or (currentMode == FM)) {
     ssbLoaded = false;
   }
+//  if ((currentMode == LSB) or  (currentMode == USB))
+//  {
+//    if (ssbLoaded == false) {
+//      loadSSB();
+//    }
+//  }
+  useBand();
+  setBandWidth();
+  checkAGC();
+  delay(100);
+  setBandSwitch();
+
   if ((currentMode == LSB) or  (currentMode == USB))
   {
     if (ssbLoaded == false) {
       loadSSB();
     }
+    useBand();
+    setBandWidth();
+    checkAGC();
+    delay(100);
+    setBandSwitch();
   }
-  useBand();
-  setBandWidth();
-  checkAGC();
 }
 
 //=======================================================================================
 void useBand()  {
-  if ((band[bandIdx].bandType == MW_BAND_TYPE) || (band[bandIdx].bandType == LW_BAND_TYPE) || (band[bandIdx].bandType == SW_BAND_TYPE)) {
-    si4735.setGpioCtl(1, 0, 0);
-    si4735.setGpio(true, 0, 0);
-  } else {
-    si4735.setGpioCtl(1, 0, 0);
-    si4735.setGpio(false, 0, 0);
-  }
   //=======================================================================================
   if ((band[bandIdx].bandType == MW_BAND_TYPE) || (band[bandIdx].bandType == LW_BAND_TYPE)) {
     band[bandIdx].currentStep = ssIdxMW;
@@ -1474,7 +1489,6 @@ void useBand()  {
     }
   }
   delay(100);
-
 }// end useband
 
 //=======================================================================================
